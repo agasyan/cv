@@ -1,0 +1,25 @@
+---
+// Local preview of any version: `npm run dev`, then /v/2026-09/. Never built for production;
+// the published version is chosen in src/config.ts.
+import type { GetStaticPaths } from 'astro';
+import ResumePage from '../../components/ResumePage.astro';
+import { getVersions, type ResumeVersion } from '../../lib/resume';
+
+export const getStaticPaths = (async () => {
+  if (!import.meta.env.DEV) return [];
+  const versions = await getVersions();
+  return versions.map((current) => ({ params: { version: current.id }, props: { current } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  current: ResumeVersion;
+}
+
+const { current } = Astro.props;
+---
+
+<ResumePage
+  current={current}
+  downloads={{ full: `/resume/${current.id}.pdf`, compact: `/resume/${current.id}-compact.pdf` }}
+  preview
+/>

@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import profilePhoto from '../assets/profile.jpg';
+import Icon from './Icon.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { pdfFileName, type ResumeVersion } from '../lib/resume';
+
+export interface Downloads {
+  full: string;
+  compact: string;
+}
+
+interface Props {
+  current: ResumeVersion;
+  downloads: Downloads;
+}
+
+const { current, downloads } = Astro.props;
+const { name } = current.data.profile;
+// Local-only downloads with the phone number from .env. Guarded by DEV so a production build
+// neither renders them nor inlines the phone value into its chunks.
+const showPhonePdfs = import.meta.env.DEV;
+const hasPhone = import.meta.env.DEV && Boolean(import.meta.env.RESUME_PHONE?.trim());
+const phoneLinks = [
+  { label: 'Full PDF', href: `/resume/${current.id}-with-phone.pdf`, file: pdfFileName(current, 'full') },
+  { label: '1-page PDF', href: `/resume/${current.id}-compact-with-phone.pdf`, file: pdfFileName(current, 'compact') },
+];
+---
+
+<header class="sticky top-0 z-30 border-b border-base-300 bg-base-100 print:hidden">
+  <div class="mx-auto flex h-16 max-w-5xl items-center gap-2 px-3 sm:px-4">
+    <a href="#resume" class="flex min-h-11 min-w-11 items-center gap-3 rounded-field pe-2" aria-label={name}>
+      <Image
+        src={profilePhoto}
+        alt=""
+        width={36}
+        height={36}
+        fit="cover"
+        position="top"
+        densities={[1, 2]}
+        class="size-9 rounded-full border border-base-300 object-cover object-[50%_30%]"
+      />
+      <span class="hidden font-serif text-lg font-semibold sm:inline" aria-hidden="true">{name}</span>
+    </a>
+    <div class="ms-auto flex items-center gap-1.5">
+      <ThemeToggle />
+      <a
+        href={downloads.compact}
+        download={pdfFileName(current, 'compact')}
+        class="btn btn-outline h-11 min-h-11 px-3 text-[0.9375rem]"
+      >
+        <span class="hidden sm:inline">1-page PDF</span>
+        <span class="sm:hidden">1 page<span class="sr-only"> PDF</span></span>
+      </a>
+      <a href={downloads.full} download={pdfFileName(current, 'full')} class="btn btn-primary h-11 min-h-11 px-4 text-[0.9375rem]">
+        <Icon name="download" class="size-4" />
+        <span class="hidden sm:inline">Download PDF</span>
+        <span class="sm:hidden">PDF</span>
+        <span class="sr-only"> (full resume)</span>
+      </a>
+    </div>
+  </div>
+  {
+    showPhonePdfs && (
+      <div class="border-t border-base-300 bg-base-200">
+        <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-x-2 px-3 text-[0.9375rem] sm:px-4">
+          <Icon name="phone" class="size-4 text-muted" />
+          <span class="text-muted">Local only, with phone:</span>
+          {hasPhone ? (
+            phoneLinks.map((l) => (
+              <a href={l.href} download={l.file} class="btn btn-ghost h-11 min-h-11 px-3 font-normal">
+                {l.label}
+              </a>
+            ))
+          ) : (
+            <span class="inline-flex min-h-11 items-center">Set RESUME_PHONE in .env to enable.</span>
+          )}
+        </div>
+      </div>
+    )
+  }
+</header>

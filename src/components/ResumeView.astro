@@ -1,0 +1,293 @@
+---
+import { Image } from 'astro:assets';
+import profilePhoto from '../assets/profile.jpg';
+import Icon, { type IconName } from './Icon.astro';
+import Inline from './Inline.astro';
+import Rich from './Rich.astro';
+import { companyRange, formatRange, profileUrl, type ResumeVersion } from '../lib/resume';
+
+interface Props {
+  current: ResumeVersion;
+}
+
+const { current } = Astro.props;
+const { profile, summary, highlights, experience, projects, education, publications, certifications, skills } =
+  current.data;
+
+const contacts: { icon: IconName; label: string; href?: string }[] = [
+  { icon: 'mail', label: profile.email, href: `mailto:${profile.email}` },
+  { icon: 'linkedin', label: profile.linkedin, href: profileUrl(profile.linkedin) },
+  ...(profile.github ? [{ icon: 'github' as const, label: profile.github, href: profileUrl(profile.github) }] : []),
+  { icon: 'pin', label: profile.location },
+];
+
+const meta = 'text-[0.9375rem] leading-snug text-muted';
+// Title and date share one row from 640px up, with the date in a right-aligned column (the "ledger").
+const titleRow = 'flex flex-col gap-0.5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:gap-x-6';
+const bulletItem =
+  'relative ps-5 text-pretty before:absolute before:top-[0.72em] before:left-1 before:size-[5px] before:rounded-full before:bg-muted';
+const sectionHeading = 'flex items-center gap-4 text-2xl';
+const sidebarHeading = 'text-xl';
+const publicationHeading = publications.length > 1 ? 'Publications' : 'Publication';
+
+// Highlights band: 2 columns below 640px, up to 4 from 640px. Hairlines are borders, so any count renders cleanly.
+const bandCell = (i: number) => [
+  'flex flex-col-reverse justify-end border-base-300 py-5 pe-2',
+  i % 2 === 1 ? 'border-s ps-4' : 'ps-0',
+  i >= 2 && 'border-t sm:border-t-0',
+  i > 0 ? 'sm:border-s sm:ps-5' : 'sm:ps-0',
+];
+---
+
+<article
+  id="resume"
+  class="mx-auto max-w-5xl scroll-mt-20 bg-base-100 px-5 py-9 shadow-[0_1px_2px_rgb(0_0_0/0.03),0_16px_40px_-24px_rgb(0_0_0/0.14)] sm:rounded-box sm:border sm:border-base-300 sm:px-10 sm:py-12 lg:px-14 lg:py-14 print:border-0 print:p-0 print:shadow-none"
+>
+  <header class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-7">
+      <Image
+        src={profilePhoto}
+        alt={`Photo of ${profile.name}`}
+        width={112}
+        height={112}
+        fit="cover"
+        position="top"
+        densities={[1, 2]}
+        loading="eager"
+        class="size-24 shrink-0 rounded-full border border-base-300 object-cover sm:size-28"
+      />
+      <div>
+        <h1 class="text-[clamp(2.5rem,6vw,4rem)] leading-[1.05]">{profile.name}</h1>
+        <p class="mt-3 text-lg leading-snug font-semibold text-balance sm:text-xl">{profile.headline}</p>
+      </div>
+    </div>
+    <ul class="flex flex-col text-[0.9375rem] sm:grid sm:grid-cols-2 sm:gap-x-6 lg:flex lg:flex-col lg:pt-2" aria-label="Contact">
+      {
+        contacts.map((c) => (
+          <li>
+            {c.href ? (
+              <a
+                href={c.href}
+                class="inline-flex min-h-11 items-center gap-2.5 underline-offset-4 hover:text-primary hover:underline"
+              >
+                <Icon name={c.icon} class="size-4 text-muted" />
+                {c.label}
+              </a>
+            ) : (
+              <span class="inline-flex min-h-11 items-center gap-2.5">
+                <Icon name={c.icon} class="size-4 text-muted" />
+                {c.label}
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </header>
+
+  <p class="mt-7 max-w-[68ch] text-pretty">{summary}</p>
+
+  {
+    highlights.length > 0 && (
+      <dl class="mt-10 grid grid-cols-2 border-y border-base-300 sm:grid-cols-4">
+        {highlights.map((h, i) => (
+          <div class:list={bandCell(i)}>
+            <dt class="mt-1.5 text-sm leading-snug text-balance text-muted">{h.label}</dt>
+            <dd class="font-serif text-[1.75rem] leading-none font-semibold sm:text-3xl">{h.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+
+  <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-14">
+    <section aria-labelledby="experience" class="min-w-0">
+      <h2 id="experience" class={sectionHeading}>
+        Experience <span class="h-px flex-1 bg-base-300" aria-hidden="true"></span>
+      </h2>
+
+      <ol
+        class="timeline timeline-vertical timeline-compact timeline-snap-icon mt-7 [&>li]:[--timeline-col-start:0] [&>li>hr]:w-px"
+      >
+        {
+          experience.map((exp, i) => {
+            const isCurrent = exp.roles.some((r) => r.end === 'present');
+            const multiRole = exp.roles.length > 1;
+            return (
+              <li>
+                {i > 0 && <hr class="bg-base-300" />}
+                <div class="timeline-middle">
+                  <span
+                    class:list={[
+                      'mt-[0.6rem] block size-3 rounded-full',
+                      isCurrent ? 'bg-primary' : 'border-2 border-muted bg-base-100',
+                    ]}
+                  />
+                </div>
+                <div class:list={['timeline-end m-0 w-full min-w-0 ps-3 sm:ps-5', i < experience.length - 1 && 'mb-10']}>
+                  <div class={titleRow}>
+                    <h3 class="text-[1.375rem] leading-tight text-balance">{exp.company}</h3>
+                    <p class={`${meta} whitespace-nowrap`}>{companyRange(exp)}</p>
+                  </div>
+                  <p class={`${meta} mt-0.5`}>{[exp.descriptor, exp.location].filter(Boolean).join(' · ')}</p>
+                  {exp.stack && (
+                    <p class={meta}>
+                      <Inline items={exp.stack} />
+                    </p>
+                  )}
+
+                  {exp.roles.map((role) => (
+                    <div class="mt-6">
+                      <div class={titleRow}>
+                        <h4 class="flex flex-wrap items-center gap-x-2.5 font-semibold">
+                          {role.title}
+                          {role.badge && (
+                            <span class="badge badge-sm badge-outline border-base-300 text-muted whitespace-nowrap">
+                              {role.badge}
+                            </span>
+                          )}
+                        </h4>
+                        {multiRole && <p class={`${meta} whitespace-nowrap`}>{formatRange(role.start, role.end)}</p>}
+                      </div>
+                      {role.team && <p class={meta}>{role.team}</p>}
+                      <ul class="mt-3 max-w-[68ch] space-y-2 wrap-break-word">
+                        {role.bullets.map((b) => (
+                          <li class={bulletItem}>
+                            <Rich text={b} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                {i < experience.length - 1 && <hr class="bg-base-300" />}
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+
+    <aside class="grid content-start gap-10 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-1 lg:gap-9">
+      <section aria-labelledby="skills" class="border-t border-base-300 pt-6 lg:border-t-0 lg:pt-1">
+        <h2 id="skills" class={sidebarHeading}>Skills</h2>
+        <dl class="mt-4 space-y-4">
+          {
+            skills.map((group) => (
+              <div>
+                <dt class="text-sm font-semibold text-muted">{group.group}</dt>
+                <dd class="mt-1 text-[0.9375rem] leading-relaxed">
+                  <Inline items={group.items} />
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <div class="space-y-9">
+        {
+          education.length > 0 && (
+            <section aria-labelledby="education" class="border-t border-base-300 pt-6">
+              <h2 id="education" class={sidebarHeading}>
+                Education
+              </h2>
+              <ul class="mt-4 space-y-4">
+                {education.map((e) => (
+                  <li class="text-[0.9375rem] leading-snug">
+                    <p class="font-semibold">{e.degree}</p>
+                    <p class="mt-0.5">{e.school}</p>
+                    <p class="mt-0.5 text-muted">
+                      {e.start} – {e.end}
+                      {e.gpa && ` · GPA ${e.gpa}`}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          publications.length > 0 && (
+            <section aria-labelledby="publications" class="border-t border-base-300 pt-6">
+              <h2 id="publications" class={sidebarHeading}>
+                {publicationHeading}
+              </h2>
+              <ul class="mt-4 space-y-3">
+                {publications.map((p) => (
+                  <li class="text-[0.9375rem] leading-snug">
+                    <p>“{p.title}”</p>
+                    <p class="mt-1 text-muted italic">{p.venue}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          certifications.length > 0 && (
+            <section aria-labelledby="certifications" class="border-t border-base-300 pt-6">
+              <h2 id="certifications" class={sidebarHeading}>
+                Certifications
+              </h2>
+              <ul class="mt-4 space-y-2 text-[0.9375rem] leading-snug">
+                {certifications.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+    </aside>
+  </div>
+
+  {
+    projects.length > 0 && (
+      <section aria-labelledby="projects" class="mt-14">
+        <h2 id="projects" class={sectionHeading}>
+          Projects <span class="h-px flex-1 bg-base-300" aria-hidden="true" />
+        </h2>
+        {projects.map((p) => (
+          <article class="mt-7 rounded-box border border-base-300 bg-base-200 p-5 sm:p-7 lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-10">
+            <div class="min-w-0">
+              <div class={titleRow}>
+                <h3 class="text-[1.375rem] leading-tight text-balance">
+                  {p.url ? (
+                    <a href={profileUrl(p.url)} class="underline-offset-4 hover:text-primary hover:underline">
+                      {p.name}
+                    </a>
+                  ) : (
+                    p.name
+                  )}
+                </h3>
+                <p class={`${meta} whitespace-nowrap`}>{formatRange(p.start, p.end)}</p>
+              </div>
+              <p class={`${meta} mt-1`}>{p.tagline}</p>
+              <ul class="mt-4 max-w-[68ch] space-y-2 wrap-break-word">
+                {p.bullets.map((b) => (
+                  <li class={bulletItem}>
+                    <Rich text={b} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="mt-6 border-t border-base-300 pt-5 lg:mt-0 lg:border-t-0 lg:border-s lg:ps-8 lg:pt-1">
+              <h4 class="text-sm font-semibold text-muted">Stack</h4>
+              <p class="mt-2 text-[0.9375rem] leading-relaxed lg:hidden">
+                <Inline items={p.stack} />
+              </p>
+              <ul class="mt-2 hidden space-y-1 text-[0.9375rem] lg:block">
+                {p.stack.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </section>
+    )
+  }
+</article>

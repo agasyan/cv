@@ -1,0 +1,148 @@
+/* Tokens and rules come from guidelines/DESIGN.md. Change them there first. */
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: false;
+  /* Only the components the page uses (guidelines/DESIGN.md § Components). */
+  include: button, badge, timeline, alert;
+}
+
+@plugin "daisyui/theme" {
+  name: "paper";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #faf9f5;
+  --color-base-300: #e7e3d8;
+  --color-base-content: #3d3d3a;
+  --color-primary: #0f766e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #115e59;
+  --color-secondary-content: #ffffff;
+  --color-accent: #efe7d8;
+  --color-accent-content: #3d3d3a;
+  --color-neutral: #3d3d3a;
+  --color-neutral-content: #faf9f5;
+  --color-info: #0f766e;
+  --color-info-content: #ffffff;
+  --color-success: #788c5d;
+  --color-success-content: #ffffff;
+  --color-warning: #c78e3f;
+  --color-warning-content: #1a1815;
+  --color-error: #b04a3f;
+  --color-error-content: #ffffff;
+  --radius-selector: 0.25rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+  --muted: #66645c;
+}
+
+@plugin "daisyui/theme" {
+  name: "paper-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #2a2824;
+  --color-base-200: #1a1815;
+  --color-base-300: #3a3630;
+  --color-base-content: #d8d6ce;
+  --color-primary: #2dd4bf;
+  --color-primary-content: #10302c;
+  --color-secondary: #5eead4;
+  --color-secondary-content: #10302c;
+  --color-accent: #4a4033;
+  --color-accent-content: #edebe3;
+  --color-neutral: #d8d6ce;
+  --color-neutral-content: #1a1815;
+  --color-info: #2dd4bf;
+  --color-info-content: #10302c;
+  --color-success: #9cb07a;
+  --color-success-content: #10302c;
+  --color-warning: #e0a961;
+  --color-warning-content: #1a1815;
+  --color-error: #d8716a;
+  --color-error-content: #1a1815;
+  --radius-selector: 0.25rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+  --muted: #a3a096;
+}
+
+@theme {
+  --font-sans: "Source Sans 3 Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
+}
+
+@theme inline {
+  --color-muted: var(--muted);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    font-size: 1rem;
+    line-height: 1.65;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (min-width: 640px) {
+    body { font-size: 1.0625rem; }
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-optical-sizing: auto;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Theme toggle shows the icon of the theme you would switch to. */
+.theme-sun { display: none; }
+[data-theme="paper-dark"] .theme-sun { display: inline-block; }
+[data-theme="paper-dark"] .theme-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-sun { display: inline-block; }
+  :root:not([data-theme]) .theme-moon { display: none; }
+}
+
+.skip-link {
+  position: fixed;
+  left: -9999px;
+  top: 0.5rem;
+  z-index: 100;
+}
+.skip-link:focus { left: 0.5rem; }
+
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+    --color-base-100: #ffffff;
+    --color-base-200: #ffffff;
+    --color-base-300: #e7e3d8;
+    --color-base-content: #2b2a27;
+    --color-primary: #0f766e;
+    --color-accent: #efe7d8;
+    --muted: #5f5e57;
+  }
+  @page { size: A4; margin: 14mm; }
+}

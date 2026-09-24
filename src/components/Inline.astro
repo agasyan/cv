@@ -1,0 +1,30 @@
+---
+// A " · "-separated list that only wraps between items, never inside one ("GitHub Actions" stays together).
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+  items.map((item, i) => {
+    const last = i === items.length - 1;
+    return (
+      <>
+        <span class="whitespace-nowrap">
+          {item}
+          {!last && (
+            <>
+              <span class="sr-only">,</span>
+              <span class="text-muted" aria-hidden="true">
+                {' ·'}
+              </span>
+            </>
+          )}
+        </span>
+        {!last && ' '}
+      </>
+    );
+  })
+}

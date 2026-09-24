@@ -1,0 +1,164 @@
+# v1, September 2026.
+# Content rules: guidelines/RESUME-BEST-PRACTICE-CONTENT.md. Voice: guidelines/PERSONALIZED.md.
+# Never invent numbers.
+# To publish a new version: copy this file to src/data/resumes/<YYYY-MM>.yaml, bump `version`,
+# replace `changes`, then edit. Which version the site serves is set in src/config.ts.
+# The phone number is not stored here: it lives in .env (RESUME_PHONE) for local PDFs only.
+# `compact: [1, 3]` picks which bullets (1-based) the 1-page PDF keeps; without it, only the first.
+version: 1
+changes:
+  - "First versioned release: full rewrite of the pre-2024 resume."
+  - "Added the last 2.5 years: TikTok (Search Ads Delivery) and Wego (Ads & Partner Care, promoted to Senior)."
+  - "Added a Projects section: a logistics platform built by directing AI coding agents."
+  - "Tailored to 2025–2026 hiring practice and rewritten in the owner's voice."
+  - "Two PDFs: full (2 pages max) and compact (1 page)."
+  - "Removed the phone number from the public page and PDFs."
+
+profile:
+  name: Agas Yanpratama
+  headline: Senior Software Engineer, Ads Ranking & Search Systems
+  email: agas.yanpratama@gmail.com
+  linkedin: linkedin.com/in/agasyan
+  github: github.com/agasyan
+  location: Bogor, Indonesia
+
+summary: >-
+  Senior backend engineer with 6 years of experience, 5+ in ads and search. Search-ads ranking at Tokopedia
+  (TopAds), then search-ads delivery at TikTok. Now ads ranking and partner monetization at Wego, promoted to
+  Senior within 12 months. Ships ranking and scoring models, A/B experiments, and ads services in Java, Go,
+  and Ruby on Rails. Takes work from tech plan to dark launch to post-deploy monitoring. Directs AI coding
+  agents: plan first, tests and CI as gates, every diff reviewed.
+
+summaryCompact: >-
+  Senior backend engineer, 6 years, 5+ in ads and search: Tokopedia (TopAds), TikTok, then Wego, promoted to
+  Senior in 12 months. Ships ranking models and A/B experiments in Java, Go, and Ruby on Rails. Directs AI
+  coding agents: plan first, tests and CI as gates, every diff reviewed.
+
+highlights:
+  - value: 5+ yrs
+    label: in ads and search
+  - value: "+1–8%"
+    label: TopAds CTR per initiative
+  - value: "+50%"
+    label: sponsored slots per mobile search
+  - value: 100+ RPS
+    label: new service, zero to production
+
+experience:
+  - company: Wego
+    descriptor: Travel metasearch (MENA/APAC)
+    location: Jakarta
+    stack: [Java, Ruby on Rails, Go, React]
+    roles:
+      - title: Senior Software Engineer
+        team: Partner Success (Ads & Partner Care)
+        badge: Promoted
+        start: 2026-01
+        end: present
+        compact: [1, 3]
+        bullets:
+          - "Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections and logged full scoring data for analysts."
+          - "Built a partner ranking control end to end: Airflow pipeline, versioned KV store (sharded, circuit breaker), and a dark-launched gate rolled out by A/B test."
+          - "Drove the Ruby 3.1 → 3.4 and Rails 6.1 → 7.2 upgrade across ads services; a YJIT sizing fix cut boot memory **~12%** with p95 flat."
+          - "Rebuilt conversion ingestion into BigQuery (pixel, partner reports, revenue files) and fixed the failing partner imports."
+          - "Took over three ads services (deeplink/compare units, partner billing, static data) after a team change; wrote 20+ service docs and tech plans."
+          - "Used Claude Code for tech plans, implementation, and automated PR review; the team adopted the automated review."
+      - title: Software Engineer 2
+        team: Flight Metasearch → Partner Success
+        start: 2025-01
+        end: 2026-01
+        compact: [1, 2]
+        bullets:
+          - "Designed a new eCPC-based ad-scoring model; its A/B test improved ad ranking and click/revenue performance, with per-variant scores logged to BigQuery."
+          - "Raised sponsored-ad inventory **50%** (2 → 3 inline slots per mobile search) in the ranking service and per-platform config."
+          - "Launched a new partner-success service at **100+ RPS** (Postgres, CI/CD, Datadog, Sentry); added real-time ad targeting from CDP segments via a Redis cache and circuit breaker."
+          - "Shipped flight-search features: timezone-aware Price Alerts emails, a “fly to anywhere” cheapest-fare API, region autocomplete, and Elasticsearch fare-trend fixes; wrote the OpenSearch migration HLD."
+
+  - company: TikTok
+    location: Jakarta
+    roles:
+      - title: R&D Engineer
+        team: Monetization (Search Ads Delivery)
+        start: 2024-03
+        end: 2025-01
+        bullets:
+          - "Assessed whether the ANN retrieval model was production-ready for serving TikTok ads in Tokopedia search, during the TikTok Shop × Tokopedia integration."
+          - "Redesigned the ads container service to hit the integration deadline without breaking the long-term architecture."
+
+  - company: Tokopedia
+    descriptor: E-commerce marketplace (Indonesia)
+    location: Jakarta
+    stack: [Go, Elasticsearch, NSQ, Redis]
+    roles:
+      - title: Software Engineer
+        team: TopAds Search
+        start: 2021-03
+        end: 2024-03
+        compact: [1]
+        bullets:
+          - "Lifted TopAds CTR **1–8%** and CVR 0.5–3% per ranking and relevance initiative, adding hundreds of millions of IDR in revenue at the same ROAS."
+          - "Kept search latency under **500 ms** at peak traffic; raised cache-hit rates across the serving path."
+          - "Turned PRDs into tech plans for 1–2 month projects and wrote incident RCAs; interviewed backend candidates."
+
+  - company: PT Bangunindo Teknusa Jaya
+    location: Jakarta
+    stack: [Python, Celery, Kafka]
+    roles:
+      - title: Backend Software Engineer
+        start: 2020-08
+        end: 2021-02
+        compact: []
+        bullets:
+          - "Built an ETL pipeline that processed **300,000 records** per source from HTTP/FTP feeds on three workers, with duplicate-run protection; co-built role-based user management."
+
+projects:
+  - name: Logistics operations platform and company website
+    tagline: Internal back-office and public website for an Indonesian logistics company.
+    start: 2026-07
+    end: present
+    compact: [1, 2]
+    stack:
+      - TypeScript
+      - Astro
+      - Hono + Zod OpenAPI
+      - Drizzle ORM
+      - Cloudflare Workers, D1 & Pages
+      - Tailwind CSS + daisyUI
+      - Vitest
+      - GitHub Actions
+    bullets:
+      - "Directed AI coding agents (Gemini CLI, OpenCode) to build the operations platform in 19 days: **73 OpenAPI routes**, 18 tables, role-based access for 8 modules. Reviewed every staged diff before commit."
+      - "Wrote the agents’ rules (AGENTS.md, plan-first workflow, architecture, security, UI) and their gates: **133 Vitest cases**, dependency-boundary checks, headless-Chrome end-to-end tests, CI."
+      - "Cut **~3,700 lines** of dead code and boilerplate, plus 11 unused dependencies, with the agents; npm audit dropped from 4 findings to 0."
+      - "Moved the company website from Django to static Astro on Cloudflare Pages; staff edit Markdown and an LLM step turns it into typed JSON."
+
+education:
+  - school: Universitas Indonesia
+    degree: Master of Information Technology
+    gpa: 3.89/4.00
+    start: 2022
+    end: 2024
+  - school: Universitas Indonesia
+    degree: B.S. Computer Science
+    start: 2016
+    end: 2020
+
+publications:
+  - title: "Analysis of the Success of Knowledge Management in Agile Teams: E-commerce in Indonesia"
+    venue: Indonesian Journal of Computer Science
+
+skills:
+  - group: Languages
+    items: [Java, Go, Ruby, TypeScript, Python, SQL]
+  - group: Frameworks
+    compact: false
+    items: [Ruby on Rails, Hono (OpenAPI), Astro, React, Drizzle ORM]
+  - group: Ads & search
+    items: [Ads ranking & eCPC scoring, CTR/CVR optimization, ANN retrieval, Search relevance, A/B experimentation]
+  - group: Data & infra
+    items: [Elasticsearch/OpenSearch, Redis, PostgreSQL, Kafka, NSQ, BigQuery, Airflow, Docker, "Cloudflare Workers, D1 & Pages"]
+  - group: Observability & CI/CD
+    compact: false
+    items: [Datadog, Sentry, Grafana, Jenkins, GitHub Actions]
+  - group: AI-directed development
+    items: [Claude Code, Gemini CLI, OpenCode, Plan-first workflow, Test and CI gates]

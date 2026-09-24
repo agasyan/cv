@@ -1,0 +1,44 @@
+---
+import { glueSymbols, parseEmphasis } from '../lib/resume';
+
+interface Props {
+  text: string;
+}
+
+// `**x**` becomes the accent highlight (guidelines/DESIGN.md § Palette) and never wraps inside.
+// Long slash-joined terms ("Sponsored/Recommended/Other") may break after each slash on phones;
+// short ones ("CI/CD") stay intact.
+const MIN_BREAKABLE_LENGTH = 18;
+
+/** Splits text into runs; `breakAfter` marks a slash where a line may wrap. */
+function runs(text: string): { text: string; breakAfter: boolean }[] {
+  return glueSymbols(text).split(/(\S*\/\S*)/).flatMap((part) => {
+    if (!part.includes('/') || part.length < MIN_BREAKABLE_LENGTH) return [{ text: part, breakAfter: false }];
+    const pieces = part.split('/');
+    return pieces.map((p, i) => ({ text: i < pieces.length - 1 ? `${p}/` : p, breakAfter: i < pieces.length - 1 }));
+  });
+}
+
+const segments = parseEmphasis(Astro.props.text);
+---
+
+{
+  segments.map((s) =>
+    s.strong ? (
+      <strong class="rounded-sm bg-accent px-[0.2em] font-semibold whitespace-nowrap text-accent-content [box-decoration-break:clone]">
+        {s.text}
+      </strong>
+    ) : (
+      runs(s.text).map((r) =>
+        r.breakAfter ? (
+          <>
+            {r.text}
+            <wbr />
+          </>
+        ) : (
+          r.text
+        ),
+      )
+    ),
+  )
+}

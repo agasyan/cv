@@ -1,0 +1,47 @@
+---
+import { getImage } from 'astro:assets';
+import profilePhoto from '../assets/profile.jpg';
+import Base from '../layouts/Base.astro';
+import ResumeView from './ResumeView.astro';
+import SiteFooter from './SiteFooter.astro';
+import SiteHeader, { type Downloads } from './SiteHeader.astro';
+import type { ResumeVersion } from '../lib/resume';
+
+interface Props {
+  current: ResumeVersion;
+  downloads: Downloads;
+  /** Dev-only preview of a version (see src/pages/v/[version].astro). */
+  preview?: boolean;
+}
+
+const { current, downloads, preview = false } = Astro.props;
+const { name, headline } = current.data.profile;
+const ogImage = await getImage({ src: profilePhoto, width: 512, format: 'jpg' });
+---
+
+<Base
+  title={`${name} | ${headline}`}
+  description={current.data.summary}
+  canonical="/"
+  noindex={preview}
+  image={ogImage.src}
+>
+  <SiteHeader current={current} downloads={downloads} />
+
+  {
+    preview && (
+      <div class="mx-auto max-w-5xl px-3 pt-4 sm:px-4 sm:pt-6 print:hidden">
+        <div role="status" class="alert alert-soft alert-warning text-[0.9375rem]">
+          Local preview of v{current.version} · {current.label}.
+          {current.isPublished ? ' This is the published version.' : ' Not published: set PUBLISHED_VERSION in src/config.ts to ship it.'}
+        </div>
+      </div>
+    )
+  }
+
+  <main class="sm:px-4 sm:pt-8 print:p-0">
+    <ResumeView current={current} />
+  </main>
+
+  <SiteFooter current={current} downloads={downloads} />
+</Base>

@@ -1,0 +1,8 @@
+---
+import ResumePage from '../components/ResumePage.astro';
+import { getPublished } from '../lib/resume';
+
+const published = await getPublished();
+---
+
+<ResumePage current={published} downloads={{ full: '/resume.pdf', compact: '/resume-compact.pdf' }} />

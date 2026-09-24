@@ -31,7 +31,6 @@ Research date: September 2026. Sources are linked inline and listed at the end.
 - Three to five short sentences. State the two or three most impressive facts in plain words ([interviewing.io](https://interviewing.io/blog/stop-trying-to-make-recruiters-think-or-why-your-resume-is-bad-and-how-to-fix-it)).
 - Implied first person ("Ships…", "Directs…"). No "I", no buzzwords, no "passionate".
 - Keep the numbers honest: 6 years total, 5+ in ads and search (since March 2021).
-- Company claims come from the company's own words. "The #1 travel app in MENA and APAC" is Wego's wording on [company.wego.com/about](https://company.wego.com/about/).
 
 ## Bullets
 

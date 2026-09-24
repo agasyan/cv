@@ -16,7 +16,7 @@ A senior backend engineer telling another engineer what he shipped, with the num
 
 1. **Lead with the point.** The first two or three words carry the line ("Cut boot memory", "Moved ranking to the server").
 2. **Short sentences.** Aim for 15 words or fewer; never over 25. Two actions in one bullet get a semicolon, not a chain of "and".
-3. **Numbers, not adjectives.** "~12% (659 → 582 MiB)" instead of "significantly reduced".
+3. **Numbers, not adjectives.** "cut boot memory ~12%" instead of "significantly reduced memory usage".
 4. **Engineer's words, not brochure words.** Use the words used at work (table below).
 5. **No hype, no praise, no hedges.** Nothing is "robust", "seamless", or "cutting-edge". Nothing "might" or "helps to".
 6. **One word per concept.** If it is a "tech plan" once, it is a "tech plan" everywhere.
@@ -48,8 +48,8 @@ A senior backend engineer telling another engineer what he shipped, with the num
 
 | Before | After |
 |---|---|
-| Career spans search-ads ranking at Tokopedia, …, the #1 travel app in MENA and APAC. | Search-ads ranking at Tokopedia (TopAds), then search-ads delivery at TikTok. Now ads ranking and partner monetization at Wego. |
-| Re-architected Flight Details ranking: moved … and published grouped sections with full scoring telemetry for analysts. | Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections, removed a legacy airline booster, and logged full scoring data for analysts. |
+| Career spans search-ads ranking at Tokopedia, search-ads delivery at TikTok, and ads ranking at Wego. | Search-ads ranking at Tokopedia (TopAds), then search-ads delivery at TikTok. Now ads ranking and partner monetization at Wego. |
+| Re-architected Flight Details ranking: moved sectioning server-side and published grouped sections with full scoring telemetry for analysts. | Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections and logged full scoring data for analysts. |
 | Ran tech plans, implementation, and automated PR review through Claude Code across an unfamiliar polyglot codebase. | Used Claude Code for tech plans, implementation, and automated PR review; the team adopted the automated review. |
 | Redesigned the ads container service to meet the integration timeline while preserving the long-term architecture. | Redesigned the ads container service to hit the integration deadline without breaking the long-term architecture. |
 

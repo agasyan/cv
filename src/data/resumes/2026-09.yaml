@@ -57,9 +57,9 @@ experience:
         end: present
         compact: [1, 3]
         bullets:
-          - "Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections, removed a legacy airline booster, and logged full scoring data for analysts."
-          - "Built partner suppression end to end: an Airflow job for route-level CVR, a versioned KV store (sharded, circuit breaker), and a dark-launched gate rolled out by A/B test."
-          - "Drove the Ruby 3.1 → 3.4 and Rails 6.1 → 7.2 upgrade across ads services; a YJIT sizing fix cut boot memory **~12%** (659 → 582 MiB) with p95 flat."
+          - "Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections and logged full scoring data for analysts."
+          - "Built a partner ranking control end to end: Airflow pipeline, versioned KV store (sharded, circuit breaker), and a dark-launched gate rolled out by A/B test."
+          - "Drove the Ruby 3.1 → 3.4 and Rails 6.1 → 7.2 upgrade across ads services; a YJIT sizing fix cut boot memory **~12%** with p95 flat."
           - "Rebuilt conversion ingestion into BigQuery (pixel, partner reports, revenue files) and fixed the failing partner imports."
           - "Took over three ads services (deeplink/compare units, partner billing, static data) after a team change; wrote 20+ service docs and tech plans."
           - "Used Claude Code for tech plans, implementation, and automated PR review; the team adopted the automated review."

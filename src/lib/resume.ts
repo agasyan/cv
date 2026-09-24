@@ -38,7 +38,7 @@ export function companyRange(exp: Experience): string {
 }
 
 const NBSP = '\u00a0';
-/** Non-breaking spaces around → and × keep "659 → 582" and "Shop × Tokopedia" on one line. */
+/** Non-breaking spaces around → and × keep "2 → 3" and "Shop × Tokopedia" on one line. */
 export const glueSymbols = (text: string) =>
   text.replaceAll(' → ', `${NBSP}→${NBSP}`).replaceAll(' × ', `${NBSP}×${NBSP}`);
 

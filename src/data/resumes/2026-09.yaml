@@ -132,13 +132,13 @@ skills:
     items: [Java, Go, Ruby, TypeScript, Python, SQL]
   - group: Frameworks
     compact: false
-    items: [Ruby on Rails, Hono (OpenAPI), Astro, React, Drizzle ORM]
+    items: [Ruby on Rails, React]
   - group: Ads & search
     items: [Ads ranking & eCPC scoring, CTR/CVR optimization, ANN retrieval, Search relevance, A/B experimentation]
   - group: Data & infra
-    items: [Elasticsearch/OpenSearch, Redis, PostgreSQL, Kafka, NSQ, BigQuery, Airflow, Docker, "Cloudflare Workers, D1 & Pages"]
+    items: [Elasticsearch/OpenSearch, Redis, PostgreSQL, Kafka, NSQ, BigQuery, Airflow, Docker]
   - group: Observability & CI/CD
     compact: false
     items: [Datadog, Sentry, Grafana, Jenkins, GitHub Actions]
   - group: AI-directed development
-    items: [Claude Code, Gemini CLI, OpenCode, Plan-first workflow, Test and CI gates]
+    items: [Claude Code, Plan-first workflow, Test and CI gates]

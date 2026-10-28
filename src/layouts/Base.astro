@@ -11,9 +11,11 @@ interface Props {
   noindex?: boolean;
   /** Social preview image path. */
   image?: string;
+  /** What the social preview image shows. */
+  imageAlt?: string;
 }
 
-const { title, description, canonical = Astro.url.pathname, noindex = false, image } = Astro.props;
+const { title, description, canonical = Astro.url.pathname, noindex = false, image, imageAlt } = Astro.props;
 const canonicalUrl = canonical === false ? null : new URL(canonical, Astro.site);
 ---
 
@@ -31,7 +33,7 @@ const canonicalUrl = canonical === false ? null : new URL(canonical, Astro.site)
     <meta property="og:description" content={description} />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
-    {image && <meta property="og:image:alt" content={title} />}
+    {image && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
     <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1a1815" media="(prefers-color-scheme: dark)" />
     <meta name="twitter:card" content="summary" />

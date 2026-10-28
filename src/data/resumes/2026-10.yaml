@@ -25,9 +25,9 @@ summary: >-
   Senior backend engineer with 6 years of experience, 5+ in ads and search. Search-ads ranking at Tokopedia
   (TopAds), search-ads delivery at TikTok, then ads ranking and partner monetization at Wego, promoted to
   Senior within 12 months. Ships ranking and scoring models, A/B experiments, and ads services in Java, Go,
-  and Ruby on Rails, from tech plan to dark launch. Takes on new domains under deadline: shipped the Umrah
-  booking MVP on time. Directs AI coding agents (plan first, tests and CI as gates, every diff reviewed); builds
-  agent pipelines with human approval checks.
+  and Ruby on Rails, from tech plan to dark launch. Takes on new domains under deadline: shipped payment flows
+  for the Umrah booking MVP on time. Directs AI coding agents (plan first, tests and CI as gates, every diff
+  reviewed); builds agent pipelines with human approval checks.
 
 summaryCompact: >-
   Senior backend engineer, 6 years, 5+ in ads and search: Tokopedia (TopAds), TikTok, then Wego (Senior in
@@ -63,7 +63,7 @@ experience:
           - "Shipped the payment, refund, and tax flows for the Umrah booking MVP on time, in **under 3 months**."
           - "Rebuilt conversion ingestion into BigQuery (pixel, partner reports, revenue files) and fixed the failing partner imports."
           - "Took over 3 ads services (deeplink/compare units, partner billing, static data) after a team change; wrote 20+ service docs and tech plans."
-          - "Built a Claude Code workspace (35 sub-agents, 39 skills) that takes a task from tech plan to reviewed PR, citing file and line for each claim. The team adopted the automated PR review."
+          - "Built a Claude Code workspace (35 sub-agents, 39 skills) that takes a task from tech plan to reviewed PR, citing file and line per claim. The team adopted the automated PR review."
       - title: Software Engineer 2
         team: Flight Metasearch → Partner Success
         start: 2025-01

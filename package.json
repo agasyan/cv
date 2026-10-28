@@ -12,7 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy": "astro build && npx wrangler@4 pages deploy dist"
+    "deploy": "node scripts/deploy.js"
   },
   "dependencies": {
     "@fontsource-variable/source-sans-3": "^5.3.0",

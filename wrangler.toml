@@ -1,4 +1,5 @@
-# Cloudflare Pages config — used by `npm run deploy` (wrangler pages deploy).
-name = "agas-cv"
+# Cloudflare Pages config, used by `npm run deploy` (scripts/deploy.js).
+# `name` is the Pages project and its address: agasyan.pages.dev. Production deploys come only from main.
+name = "agasyan"
 pages_build_output_dir = "./dist"
 compatibility_date = "2026-09-01"

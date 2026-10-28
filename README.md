@@ -40,7 +40,7 @@ npm run preview   # serve dist/ at http://localhost:4321
 | `npm run build` | Build `dist/`: the site, `/resume.pdf` (full, ≤ 2 pages) and `/resume-compact.pdf` (1 page) |
 | `npm run preview` | Serve the built `dist/` |
 | `npm run check` | Type-check the Astro and TypeScript code |
-| `npm run deploy` | Build, then upload `dist/` to Cloudflare Pages with Wrangler |
+| `npm run deploy` | On `main` only: build, upload `dist/` to Cloudflare Pages, then commit `deploy.json` (see [Deploy](#deploy-to-cloudflare-pages)) |
 
 ## Edit the resume
 
@@ -63,10 +63,10 @@ Writing rules:
 
 ## Versions
 
-1. Copy the latest file to the new month, e.g. `src/data/resumes/2026-10.yaml`.
+1. Copy the latest file to the new month, e.g. `src/data/resumes/2026-11.yaml`.
 2. Bump `version` and replace the `changes` list.
-3. Edit, then preview locally at `/v/2026-10/` (PDFs at `/resume/2026-10.pdf` and `/resume/2026-10-compact.pdf`).
-4. Publish by leaving `PUBLISHED_VERSION = 'latest'` in `src/config.ts`, or pin an older id such as `'2026-09'` to roll back.
+3. Edit, then preview locally at `/v/2026-11/` (PDFs at `/resume/2026-11.pdf` and `/resume/2026-11-compact.pdf`).
+4. Publish by leaving `PUBLISHED_VERSION = 'latest'` in `src/config.ts`, or pin an older id such as `'2026-10'` to roll back.
 
 Preview routes exist only in `npm run dev`; production builds only the published version.
 
@@ -76,7 +76,7 @@ Preview routes exist only in `npm run dev`; production builds only the published
 |---|---|---|
 | URL | `/resume.pdf` | `/resume-compact.pdf` |
 | Page budget | 2 pages max | exactly 1 page |
-| Content | everything | `summaryCompact` and the `compact` picks; no publications, certifications, stack lines or project taglines |
+| Content | everything | `summaryCompact` and the `compact` picks; no publications, certifications, company stack lines or project taglines |
 
 Both are A4, single column, with embedded fonts and no tables or images, so applicant tracking systems can read them. If an edit pushes a PDF past its budget, `npm run build` stops with a message such as `Resume 2026-09 compact PDF is 2 pages; the limit is 1.` Shorten bullets or change the `compact` picks.
 
@@ -89,18 +89,33 @@ Both are A4, single column, with embedded fonts and no tables or images, so appl
 
 ## Deploy to Cloudflare Pages
 
-**Git integration (recommended).** In the Cloudflare dashboard, create a Pages project from this GitHub repo:
+The site deploys from my laptop with `npm run deploy`, not through Cloudflare's Git integration. `wrangler.toml` names the Pages project (`agasyan`, so the address is <https://agasyan.pages.dev>).
 
-- Project name: `agas-cv` (matches `wrangler.toml`)
-- Framework preset: Astro
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Root directory: leave empty
-- Optional environment variable: `SITE_URL`, the canonical URL once a custom domain is attached (default `https://agas-cv.pages.dev`)
+**Once:**
 
-Every push to `main` then deploys the site.
+```bash
+npx wrangler@4 login
+npx wrangler@4 pages project create agasyan --production-branch main
+```
 
-**Direct upload.** Run `npx wrangler@4 login` once, then `npm run deploy`.
+Project names are global on `pages.dev`. If `agasyan` is taken, Cloudflare adds a suffix; check the address it prints. With a suffix, run every deploy as `SITE_URL=<that address> npm run deploy`, so the canonical URL and `deploy.json` point at your site.
+
+**Each deploy**, from an up-to-date `main`:
+
+```bash
+git checkout main && git pull
+npm run deploy
+git push
+```
+
+`npm run deploy` (`scripts/deploy.js`):
+
+1. Stops unless the branch is `main`, the working tree is clean, and `main` is not behind `origin/main`.
+2. Stops with "nothing changed" when no file but `deploy.json` changed since the last deploy. `npm run deploy -- --force` deploys anyway.
+3. Builds, then uploads `dist/` as a production deploy tagged with the commit hash and message.
+4. Writes `deploy.json` (project, address, commit, time) and commits it on `main`. Push `main` to share it.
+
+The footer's "Updated" date is the last commit's date, not counting `deploy.json` commits. Set `SITE_URL` in the shell before `npm run deploy` once a custom domain is attached; it changes the canonical URL and the address in `deploy.json`. A `SITE_URL` change alone is not a new commit, so deploy it with `--force`.
 
 ## Project structure
 
@@ -110,6 +125,7 @@ src/
   content.config.ts            resume schema (Zod)
   data/resumes/YYYY-MM.yaml    one file per version
   lib/resume.ts                version loading, dates, PDF page budgets
+  lib/git.ts                   last commit date for the footer
   assets/profile.jpg           photo (web only)
   components/                  page sections, header, footer, icons
   layouts/Base.astro           <head>, theme boot script, skip link
@@ -123,6 +139,9 @@ src/
   styles/global.css            theme tokens (light and dark)
 guidelines/                    design, content and voice rules
 public/                        favicon, Cloudflare headers
+scripts/deploy.js              npm run deploy (main only)
+wrangler.toml                  Cloudflare Pages project
+deploy.json                    the last deploy; written and committed by npm run deploy
 ```
 
 ## Guidelines

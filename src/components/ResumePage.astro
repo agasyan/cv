@@ -17,11 +17,13 @@ interface Props {
 const { current, downloads, preview = false } = Astro.props;
 const { name, headline } = current.data.profile;
 const ogImage = await getImage({ src: profilePhoto, width: 512, format: 'jpg' });
+// Search results cut descriptions near 160 characters: use the compact summary's first sentence.
+const description = (current.data.summaryCompact ?? current.data.summary).split(/(?<=\.)\s/)[0];
 ---
 
 <Base
   title={`${name} | ${headline}`}
-  description={current.data.summary}
+  description={description}
   canonical="/"
   noindex={preview}
   image={ogImage.src}

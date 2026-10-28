@@ -21,7 +21,7 @@ const contacts: { icon: IconName; label: string; href?: string }[] = [
   { icon: 'pin', label: profile.location },
 ];
 
-const meta = 'text-[0.9375rem] leading-snug text-muted';
+const meta = 'text-[0.9375rem] leading-snug text-muted tabular-nums';
 // Title and date share one row from 640px up, with the date in a right-aligned column (the "ledger").
 const titleRow = 'flex flex-col gap-0.5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:gap-x-6';
 const bulletItem =
@@ -47,7 +47,7 @@ const bandCell = (i: number) => [
     <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-7">
       <Image
         src={profilePhoto}
-        alt={`Photo of ${profile.name}`}
+        alt=""
         width={112}
         height={112}
         fit="cover"
@@ -256,7 +256,7 @@ const bandCell = (i: number) => [
               <div class={titleRow}>
                 <h3 class="text-[1.375rem] leading-tight text-balance">
                   {p.url ? (
-                    <a href={profileUrl(p.url)} class="underline-offset-4 hover:text-primary hover:underline">
+                    <a href={profileUrl(p.url)} class="inline-flex min-h-11 items-center underline-offset-4 hover:text-primary hover:underline">
                       {p.name}
                     </a>
                   ) : (

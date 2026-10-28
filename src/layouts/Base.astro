@@ -31,6 +31,9 @@ const canonicalUrl = canonical === false ? null : new URL(canonical, Astro.site)
     <meta property="og:description" content={description} />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    {image && <meta property="og:image:alt" content={title} />}
+    <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1815" media="(prefers-color-scheme: dark)" />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>

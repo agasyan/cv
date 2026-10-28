@@ -44,14 +44,14 @@ Research date: September 2026. Sources are linked inline and listed at the end.
 ## Projects
 
 - Only standout projects, with context (Orosz). Each entry gives: what it is, the owner's role, the result, and the stack.
-- Link to something live when there is one and the client agrees to be named. Until then, describe the client generically ("an Indonesian logistics company").
+- Link to something live when there is one and the client agrees to be named. Until then, describe the client generically ("a local business"). Leave out confidential or work-in-progress projects entirely.
 
 ## AI-directed development
 
 Using AI tools is now normal (84% of developers use or plan to use them, [Stack Overflow 2025](https://survey.stackoverflow.co/2025/ai)), so the tool alone says nothing. What evaluators look for is judgment: catching and fixing AI mistakes, and explaining trade-offs ([CoderPad 2026](https://coderpad.io/survey-reports/coderpad-state-of-tech-hiring-2026/)). Credible practice looks like written plans, a test suite, CI, and a review of every change ([Willison](https://simonwillison.net/2025/Oct/7/vibe-engineering/)).
 
 - **Say it as a method with evidence:** "Directed AI coding agents … with every staged diff reviewed before commit", plus the gates (tests, boundary rules, CI) and the output (routes, tables, lines removed).
-- **Name only tools with evidence.** The logistics platform commits credit Gemini and DeepSeek models run through Gemini CLI and OpenCode, so that project names those. Claude Code belongs to the Wego work.
+- **Name only tools with evidence.** Name a tool on a project only when its commits credit it (for example, co-author trailers). Claude Code belongs to the Wego work and to the public repos whose commits credit it.
 - **Placement:** one clause in the summary, one line in skills, the proof in projects ([Built In](https://builtin.com/articles/show-ai-skills-resume)).
 - **Red flags to avoid:** a tool name on every bullet, anything that sounds like unreviewed "vibe coding", speed claims without quality evidence, and resume text that itself reads as AI-written ([Resume Genius](https://resumegenius.com/blog/job-hunting/ai-impact-on-hiring)).
 - **No PR or commit counts as a result.** Agents make PRs cheap, so a count shows volume, not impact. Show the outcome (shipped on time, adopted by the team, a measured change) or the method (gates, review) instead.

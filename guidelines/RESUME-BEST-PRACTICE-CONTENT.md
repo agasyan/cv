@@ -54,6 +54,7 @@ Using AI tools is now normal (84% of developers use or plan to use them, [Stack 
 - **Name only tools with evidence.** The logistics platform commits credit Gemini and DeepSeek models run through Gemini CLI and OpenCode, so that project names those. Claude Code belongs to the Wego work.
 - **Placement:** one clause in the summary, one line in skills, the proof in projects ([Built In](https://builtin.com/articles/show-ai-skills-resume)).
 - **Red flags to avoid:** a tool name on every bullet, anything that sounds like unreviewed "vibe coding", speed claims without quality evidence, and resume text that itself reads as AI-written ([Resume Genius](https://resumegenius.com/blog/job-hunting/ai-impact-on-hiring)).
+- **No PR or commit counts as a result.** Agents make PRs cheap, so a count shows volume, not impact. Show the outcome (shipped on time, adopted by the team, a measured change) or the method (gates, review) instead.
 
 ## Skills
 

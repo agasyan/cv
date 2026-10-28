@@ -8,7 +8,7 @@
 version: 2
 changes:
   - "Added Ground Truth, an LLM agent app from Wego's October 2026 hackathon, to Projects."
-  - "Wego: the Claude Code bullet now names the workspace (sub-agents and skills) and the PRs shipped with it."
+  - "Wego: the Claude Code bullet now names the workspace (sub-agents and skills) and how it works."
   - "Summary and skills now cover building LLM agents, not only directing AI coding agents."
   - "Wego: added the Umrah booking MVP (payment, refund, and tax flows, shipped on time) and Spring Boot; tightened the Ruby upgrade and dead-code bullets to keep 2 pages."
   - "1-page PDF: one bullet per project; `summaryCompact` and the Flight Details bullet trimmed to fit."
@@ -60,10 +60,10 @@ experience:
           - "Moved Flight Details ranking to the server: added Sponsored/Recommended/Other sections; logged full scoring data."
           - "Built a partner ranking control end to end: Airflow pipeline, versioned KV store (sharded, circuit breaker), and a dark-launched gate rolled out by A/B test."
           - "Drove the Ruby 3.1 → 3.4 and Rails 6.1 → 7.2 upgrade in ads services; a YJIT sizing fix cut boot memory **~12%**, p95 flat."
-          - "Shipped the payment, refund, and tax flows for the Umrah booking MVP on time: **27 merged PRs** in under 3 months."
+          - "Shipped the payment, refund, and tax flows for the Umrah booking MVP on time, in **under 3 months**."
           - "Rebuilt conversion ingestion into BigQuery (pixel, partner reports, revenue files) and fixed the failing partner imports."
           - "Took over three ads services (deeplink/compare units, partner billing, static data) after a team change; wrote 20+ service docs and tech plans."
-          - "Built a Claude Code workspace (35 sub-agents, 39 skills) that takes a task from tech plan to reviewed PR; shipped **80+ PRs** with it. The team adopted the automated PR review."
+          - "Built a Claude Code workspace (**35 sub-agents**, 39 skills) that takes a task from tech plan to reviewed PR, citing file and line for every claim. The team adopted the automated PR review."
       - title: Software Engineer 2
         team: Flight Metasearch → Partner Success
         start: 2025-01
@@ -134,7 +134,7 @@ projects:
       - "Moved the company website from Django to static Astro on Cloudflare Pages; staff edit Markdown and an LLM step turns it into typed JSON."
 
   - name: Ground Truth (Wego hackathon)
-    tagline: Built at WegoHack 2.0, Wego’s internal hackathon. Opened 15 of the team’s 21 merged PRs, built with Claude Code.
+    tagline: Team project at WegoHack 2.0, Wego’s internal hackathon; built with Claude Code.
     start: 2026-10
     end: 2026-10
     compact: [1]

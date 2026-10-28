@@ -25,8 +25,16 @@ export function formatMonth(ym: string): string {
   return `${MONTHS[Number(month) - 1]} ${year}`;
 }
 
+/** A one-month span shows the month once ("Oct 2026"). */
 export function formatRange(start: string, end: string): string {
+  if (start === end) return formatMonth(start);
   return `${formatMonth(start)} – ${formatMonth(end)}`;
+}
+
+/** `YYYY-MM-DD` → "28 Oct 2026" */
+export function formatDay(ymd: string): string {
+  const [year, month, day] = ymd.split('-');
+  return `${Number(day)} ${MONTHS[Number(month) - 1]} ${year}`;
 }
 
 /** A company's span across all of its roles. */

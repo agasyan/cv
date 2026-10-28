@@ -6,8 +6,8 @@ const projectRoot = fileURLToPath(new URL('.', import.meta.url));
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  // Set SITE_URL in Cloudflare Pages → Settings → Environment variables once a custom domain is attached.
-  site: process.env.SITE_URL ?? 'https://agas-cv.pages.dev',
+  // Set SITE_URL in the shell that runs `npm run deploy` once a custom domain is attached.
+  site: process.env.SITE_URL ?? 'https://agasyan.pages.dev',
   build: { format: 'directory' },
   vite: {
     plugins: [tailwindcss()],

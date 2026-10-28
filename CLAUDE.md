@@ -6,4 +6,5 @@
 - This repo is public: no phone number, internal ticket IDs, client names, or other people's data in committed files. The phone lives only in `.env`. Open items live in the gitignored `guidelines/OPEN-ITEMS.local.md`.
 - Which version is live is set in `src/config.ts`, never on the page.
 - Two PDFs: full (≤ 2 pages) and compact (1 page). `npm run build` fails if either runs over; fix it with `compact` picks or shorter bullets.
+- Deploy only with `npm run deploy` on `main`: it refuses other branches and commits `deploy.json` itself. Never hand-edit `deploy.json`.
 - Verify with `npm run build`, then check `dist/index.html` and the extracted text of both PDFs (`dist/resume.pdf`, `dist/resume-compact.pdf`; PDF text is compressed, so extract it) have no phone number.

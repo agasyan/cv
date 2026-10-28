@@ -159,7 +159,13 @@ function projectBlocks(p: Project, index: number, compact: boolean): Content[] {
   const head: Content = {
     stack: [
       dated(
-        { text: [{ text: p.name, font: 'Serif', fontSize: 11, ...(p.url ? { link: profileUrl(p.url) } : {}) }] },
+        {
+          text: [
+            { text: p.name, font: 'Serif', fontSize: 11, ...(p.url ? { link: profileUrl(p.url) } : {}) },
+            // ATS parsers and paper drop link targets, so the address is printed too.
+            ...(p.url ? [{ text: `${SEP}${p.url}`, color: MUTED, fontSize: 9.4, link: profileUrl(p.url) }] : []),
+          ],
+        },
         formatRange(p.start, p.end),
       ),
       ...(compact ? [] : [{ text: p.tagline, color: MUTED, margin: [0, 1, 0, 0] } as Content]),
@@ -168,7 +174,9 @@ function projectBlocks(p: Project, index: number, compact: boolean): Content[] {
     unbreakable: true,
     margin: [0, index > 0 ? layout.entryGap : 0, 0, 0],
   };
-  return [head, ...bulletList(restBullets, false), { stack: [stackLine(p.stack)], margin: [15, 1, 0, 0] }];
+  // A project with no compact bullets prints as its heading only, without a bare stack line.
+  const stack: Content[] = compact && bullets.length === 0 ? [] : [{ stack: [stackLine(p.stack)], margin: [15, 1, 0, 0] }];
+  return [head, ...bulletList(restBullets, false), ...stack];
 }
 
 function referenceTitle(publications: number, certifications: number): string {
@@ -262,7 +270,7 @@ function buildDocDefinition(v: ResumeVersion, options: PdfOptions = {}): TDocume
       text: `${profile.name}${SEP}Page ${currentPage} of ${pageCount}`,
       alignment: 'right',
       fontSize: 8,
-      color: '#8a887f',
+      color: MUTED,
       margin: [PAGE_MARGIN_X, 14, PAGE_MARGIN_X, 0],
     }),
     content,

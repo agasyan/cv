@@ -28,7 +28,7 @@ const phoneLinks = [
 ---
 
 <header class="sticky top-0 z-30 border-b border-base-300 bg-base-100 print:hidden">
-  <div class="mx-auto flex h-16 max-w-5xl items-center gap-2 px-3 sm:px-4">
+  <div class="mx-auto flex h-16 max-w-5xl items-center gap-2 px-5 sm:px-4">
     <a href="#resume" class="flex min-h-11 min-w-11 items-center gap-3 rounded-field pe-2" aria-label={name}>
       <Image
         src={profilePhoto}
@@ -38,6 +38,7 @@ const phoneLinks = [
         fit="cover"
         position="top"
         densities={[1, 2]}
+        loading="eager"
         class="size-9 rounded-full border border-base-300 object-cover object-[50%_30%]"
       />
       <span class="hidden font-serif text-lg font-semibold sm:inline" aria-hidden="true">{name}</span>
@@ -63,7 +64,7 @@ const phoneLinks = [
   {
     showPhonePdfs && (
       <div class="border-t border-base-300 bg-base-200">
-        <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-x-2 px-3 text-[0.9375rem] sm:px-4">
+        <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-x-2 px-5 text-[0.9375rem] sm:px-4">
           <Icon name="phone" class="size-4 text-muted" />
           <span class="text-muted">Local only, with phone:</span>
           {hasPhone ? (

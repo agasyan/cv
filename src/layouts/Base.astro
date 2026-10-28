@@ -34,8 +34,9 @@ const canonicalUrl = canonical === false ? null : new URL(canonical, Astro.site)
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
     {image && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
-    <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1a1815" media="(prefers-color-scheme: dark)" />
+    {/* The browser bar sits on the sticky header, so it takes the header's base-100, not the page's base-200. */}
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#2a2824" media="(prefers-color-scheme: dark)" />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>

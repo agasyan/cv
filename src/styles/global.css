@@ -148,8 +148,9 @@
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
-  #resume li,
-  #resume article article { break-inside: avoid; }
+  /* Keep bullets and project cards whole. Not the timeline's `ol > li`: a whole company would jump a page. */
+  #resume ul > li,
+  #resume article { break-inside: avoid; }
   #resume h2,
   #resume h3,
   #resume h4 { break-after: avoid; }

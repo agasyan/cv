@@ -159,7 +159,13 @@ function projectBlocks(p: Project, index: number, compact: boolean): Content[] {
   const head: Content = {
     stack: [
       dated(
-        { text: [{ text: p.name, font: 'Serif', fontSize: 11, ...(p.url ? { link: profileUrl(p.url) } : {}) }] },
+        {
+          text: [
+            { text: p.name, font: 'Serif', fontSize: 11, ...(p.url ? { link: profileUrl(p.url) } : {}) },
+            // ATS parsers and paper drop link targets, so the address is printed too.
+            ...(p.url ? [{ text: `${SEP}${p.url}`, color: MUTED, fontSize: 9.4, link: profileUrl(p.url) }] : []),
+          ],
+        },
         formatRange(p.start, p.end),
       ),
       ...(compact ? [] : [{ text: p.tagline, color: MUTED, margin: [0, 1, 0, 0] } as Content]),
